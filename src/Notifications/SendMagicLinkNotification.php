@@ -31,10 +31,10 @@ class SendMagicLinkNotification extends Notification implements ShouldQueue
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject(Lang::get('Sign in to :app_name', ['app_name' => env('APP_NAME', 'Laravel')]))
+            ->subject(Lang::get('Sign in to :app_name', ['app_name' => config('app.name')]))
             ->line(Lang::get('Click the link below to sign in to your account.'))
             ->line(Lang::get('This link will expire in :count minutes and can only be used once.', ['count' => config('passwordless.magic_link_timeout')]))
-            ->action(Lang::get('Sign In to :app_name', ['app_name' => env('APP_NAME', 'Laravel')]), $this->verificationUrl($notifiable))
+            ->action(Lang::get('Sign In to :app_name', ['app_name' => config('app.name')]), $this->verificationUrl($notifiable))
             ->line(Lang::get('If you did not make this request, no further action is required.'));
     }
 
