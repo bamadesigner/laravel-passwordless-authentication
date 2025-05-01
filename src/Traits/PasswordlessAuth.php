@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use NorbyBaru\Passwordless\CanUsePasswordlessAuthenticatable;
 use NorbyBaru\Passwordless\Facades\Passwordless;
@@ -21,6 +22,7 @@ trait PasswordlessAuth
      */
     public function loginByEmail(Request $request): RedirectResponse|Response
     {
+		Log::info('loginByEmail');
         $response = $this->verifyMagicLink($request);
 
         if (! $response instanceof CanUsePasswordlessAuthenticatable) {
