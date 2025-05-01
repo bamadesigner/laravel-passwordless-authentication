@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use UnexpectedValueException;
 
@@ -53,6 +54,7 @@ class MagicLink
 
     public function generateUrl(CanUsePasswordlessAuthenticatable $notifiable, string $token): string
     {
+		Log::info('generateUrl: ' . env('APP_URL'));
         return URL::temporarySignedRoute(
             'passwordless.login',
             Carbon::now()->addSeconds(config('passwordless.magic_link_timeout')),
