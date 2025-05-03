@@ -3,13 +3,12 @@
 namespace NorbyBaru\Passwordless\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Lang;
 use NorbyBaru\Passwordless\Facades\Passwordless;
 
-class SendMagicLinkNotification extends Notification implements ShouldQueue
+class SendMagicLinkNotification extends Notification
 {
     use Queueable;
 
