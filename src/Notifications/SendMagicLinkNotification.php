@@ -34,7 +34,7 @@ class SendMagicLinkNotification extends Notification
             ->line(Lang::get('Click the link below to log in to :app_name website.', ['app_name' => config('app.name')]))
             ->line(Lang::get('This link will expire in :count minutes and can only be used once.', ['count' => config('passwordless.magic_link_timeout')]))
             ->action(Lang::get('Log in to :app_name', ['app_name' => config('app.name')]), $this->verificationUrl($notifiable))
-            ->line(Lang::get('If you did not make this request, no further action is required.'));
+            ->line(Lang::get('If you did not request this login, no further action is required. If you have concerns or need help, reply to this email to contact us.'));
     }
 
     /**
