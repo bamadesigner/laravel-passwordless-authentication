@@ -15,6 +15,18 @@ use NorbyBaru\Passwordless\MagicLink;
 
 trait PasswordlessAuth
 {
+    public function loginByEmailGet(Request $request): Response
+    {
+        $rtn = '<!DOCTYPE html><html><body onload="document.forms[\'login\'].submit()"><form action="' . config('passwordless.callback_url') . '" method="POST" name="login">';
+        foreach (['email', 'expires', 'hash', 'token', 'signature'] as $field) {
+            if ($request->has($field)) {
+                $rtn .= '<input type="hidden" name="' . $field . '" value="' . htmlentities($request->input($field)) . '">';
+            }
+        }
+        $rtn .= '<input type="hidden" name="_token" value="' . csrf_token() . '" />';
+        $rtn .= '<input type="submit" value="login"></form></body></html>';
+        return response($rtn, 200)->header('Content-type', 'text/html');
+    }
     /**
      * @throws \Illuminate\Auth\Access\AuthorizationException
      * @throws \Illuminate\Validation\ValidationException
