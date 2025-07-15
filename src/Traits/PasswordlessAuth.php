@@ -27,7 +27,7 @@ trait PasswordlessAuth
             }
         }
         $rtn .= '<input type="hidden" name="_token" value="'.csrf_token().'" />';
-        $rtn .= '<input type="submit" value="login" class="hide-js"></form></body></html>';
+        $rtn .= '<input type="submit" value="Login to the website" class="hide-js"></form></body></html>';
 
         return response($rtn, 200)->header('Content-type', 'text/html');
     }
