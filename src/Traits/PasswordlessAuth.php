@@ -17,16 +17,21 @@ trait PasswordlessAuth
 {
     public function loginByEmailGet(Request $request): Response
     {
-        $rtn = '<!DOCTYPE html><html><body onload="document.forms[\'login\'].submit()"><form action="' . config('passwordless.callback_url') . '" method="POST" name="login">';
+        $rtn = '<!DOCTYPE html><html>';
+        $rtn .= '<script>document.addEventListener("DOMContentLoaded",function(){document.body.classList.add("active");document.forms[\'login\'].submit();});</script>';
+        $rtn .= '<style>body.active .hide-js{display:none;}</style>';
+        $rtn .= '<body><form action="'.config('passwordless.callback_url').'" method="POST" name="login">';
         foreach (['email', 'expires', 'hash', 'token', 'signature'] as $field) {
             if ($request->has($field)) {
-                $rtn .= '<input type="hidden" name="' . $field . '" value="' . htmlentities($request->input($field)) . '">';
+                $rtn .= '<input type="hidden" name="'.$field.'" value="'.htmlentities($request->input($field)).'">';
             }
         }
-        $rtn .= '<input type="hidden" name="_token" value="' . csrf_token() . '" />';
-        $rtn .= '<input type="submit" value="login"></form></body></html>';
+        $rtn .= '<input type="hidden" name="_token" value="'.csrf_token().'" />';
+        $rtn .= '<input type="submit" value="login" class="hide-js"></form></body></html>';
+
         return response($rtn, 200)->header('Content-type', 'text/html');
     }
+
     /**
      * @throws \Illuminate\Auth\Access\AuthorizationException
      * @throws \Illuminate\Validation\ValidationException
